@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keranjang Belanja — Retina CCTV</title>
+  <meta name="description" content="Keranjang belanja Retina Security Technology">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟢</text></svg>">
+</head>
+
+<body>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <div class="brand-icon">🔒</div>
+        RETINA <span>CCTV</span>
+      </a>
+
+      <div class="navbar-links">
+        <a href="index.html">Produk</a>
+        <a href="https://retinacctv.id" target="_blank">Website Utama</a>
+        <a href="cart.html" class="cart-link active">
+          🛒 Keranjang
+          <span class="cart-badge">0</span>
+        </a>
+      </div>
+
+      <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html">📋 Produk</a>
+      <a href="https://retinacctv.id" target="_blank">🌐 Website Utama</a>
+      <a href="cart.html" class="mobile-cart-link active">
+        🛒 Keranjang
+        <span class="cart-badge">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══ CART CONTENT ═══ -->
+  <main class="cart-page">
+    <div class="cart-header">
+      <h1>🛒 Keranjang Belanja</h1>
+    </div>
+
+    <div id="cart-content">
+      <!-- Akan diisi oleh JavaScript -->
+    </div>
+  </main>
+
+  <!-- ═══ BOTTOM NAVIGATION (MOBILE) ═══ -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <a href="index.html" class="bnav-item">
+      <span class="bnav-icon">🏠</span>
+      <span class="bnav-label">Beranda</span>
+    </a>
+    <a href="index.html#products-section" class="bnav-item">
+      <span class="bnav-icon">🔍</span>
+      <span class="bnav-label">Cari</span>
+    </a>
+    <a href="cart.html" class="bnav-item bnav-cart active">
+      <div class="bnav-icon-wrapper">
+        <span class="bnav-icon">🛒</span>
+        <span class="cart-badge">0</span>
+      </div>
+      <span class="bnav-label">Keranjang</span>
+    </a>
+    <a href="#" class="bnav-item" id="bnav-wa" target="_blank">
+      <span class="bnav-icon">💬</span>
+      <span class="bnav-label">Bantuan</span>
+    </a>
+  </nav>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-text">© 2026 Retina Security Technology. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="https://retinacctv.id" target="_blank">Website Utama</a>
+        <a href="https://retinacctv.id/instalasi/" target="_blank">Instalasi</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ FLOATING WHATSAPP ═══ -->
+  <a href="" id="wa-float" class="wa-float" target="_blank" aria-label="WhatsApp">💬</a>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="js/config.js"></script>
+  <script src="js/sheets.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCart();
+
+      // Update cart whenever it changes
+      document.addEventListener('cartUpdated', renderCart);
+
+      // Set WhatsApp links
+      const waMessage = 'Halo Retina CCTV, saya ingin bertanya tentang pesanan saya.';
+      const waLink = `https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+
+      const waFloat = document.getElementById('wa-float');
+      if (waFloat) waFloat.href = waLink;
+
+      const bnavWa = document.getElementById('bnav-wa');
+      if (bnavWa) bnavWa.href = waLink;
+    });
+
+    function renderCart() {
+      const container = document.getElementById('cart-content');
+      const items = Cart.getItems();
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div class="cart-empty">
+            <div class="empty-icon">🛒</div>
+            <h2>Keranjang Anda kosong</h2>
+            <p>Belum ada produk di keranjang. Yuk mulai belanja!</p>
+            <a href="index.html" class="btn-shop-now">📋 Lihat Produk</a>
+          </div>
+        `;
+        return;
+      }
+
+      const itemsHTML = items.map(item => `
+        <div class="cart-item fade-in" data-id="${item.id}">
+          <div class="cart-item-image">
+            <img src="${item.gambar}" alt="${item.nama}"
+                 onerror="this.src='${CONFIG.PLACEHOLDER_IMAGE}'">
+          </div>
+
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.nama}</div>
+            <div class="cart-item-price">${formatPrice(item.harga)} / unit</div>
+          </div>
+
+          <div class="cart-item-controls">
+            <div class="cart-qty">
+              <button onclick="updateCartQty('${item.id}', ${item.quantity - 1})">−</button>
+              <span>${item.quantity}</span>
+              <button onclick="updateCartQty('${item.id}', ${item.quantity + 1})">+</button>
+            </div>
+            <div class="cart-item-subtotal">${formatPrice(item.harga * item.quantity)}</div>
+            <button class="btn-remove" onclick="removeCartItem('${item.id}')" title="Hapus">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+
+      container.innerHTML = `
+        <div class="cart-layout">
+          <div class="cart-items">
+            ${itemsHTML}
+          </div>
+
+          <div class="cart-summary">
+            <h3>Ringkasan Pesanan</h3>
+
+            <div class="summary-row">
+              <span>Jumlah Produk</span>
+              <span>${Cart.getTotalItems()} item</span>
+            </div>
+            <div class="summary-row">
+              <span>Jenis Produk</span>
+              <span>${items.length} produk</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span>${formatPrice(Cart.getTotal())}</span>
+            </div>
+
+            <div class="summary-actions">
+              <button class="btn-wa-checkout" onclick="Cart.checkoutWhatsApp()">
+                💬 Checkout via WhatsApp
+              </button>
+              <button class="btn-copy-order" onclick="Cart.copyOrder()">
+                📋 Salin Detail Pesanan
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateCartQty(id, newQty) {
+      if (newQty < 1) {
+        removeCartItem(id);
+        return;
+      }
+      Cart.updateQuantity(id, newQty);
+      renderCart();
+    }
+
+    function removeCartItem(id) {
+      const item = document.querySelector(`.cart-item[data-id="${id}"]`);
+      if (item) {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-20px)';
+        item.style.transition = 'all 0.3s ease';
+        setTimeout(() => {
+          Cart.removeItem(id);
+          renderCart();
+        }, 300);
+      } else {
+        Cart.removeItem(id);
+        renderCart();
+      }
+    }
+  </script>
+</body>
+
+</html>
