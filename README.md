@@ -21,29 +21,24 @@ Website E-commerce modern untuk solusi keamanan CCTV, terintegrasi langsung deng
 - **Routing**: Vue Router
 
 ## 📂 Struktur Proyek
-- `/retinav2-vue`: Folder utama aplikasi Vue.
-- `/js`: Script legacy/utilitas untuk integrasi.
-- `/css`: Stylesheets pendukung.
-- `/public/images/products`: Lokasi penyimpanan foto produk.
+- `/src`: Kode utama Vue (Komponen, View, Composables).
+- `/public`: Aset statis dan foto produk.
+- `/legacy_backup`: Arsip kode versi HTML statis lama (tidak digunakan lagi).
 
 ## ⚙️ Cara Menjalankan Lokal
-1. Masuk ke folder vue:
-   ```bash
-   cd retinav2-vue
-   ```
-2. Install dependensi:
+1. Install dependensi:
    ```bash
    npm install
    ```
-3. Jalankan server development:
+2. Jalankan server development:
    ```bash
    npm run dev
    ```
 
 ## 📝 Update Log (Catatan Perkembangan)
-- **2026-03-04**: Inisialisasi Repositori GitHub dan migrasi struktur folder.
+- **2026-03-04**: Restrukturisasi proyek untuk perbaikan deployment (memindahkan Vue ke root).
+- **2026-03-04**: Inisialisasi Repositori GitHub dan dokumentasi awal.
 - **2026-03-04**: Persiapan sistem penamaan foto produk otomatis (webp/jpg).
-- **2026-02-26**: Implementasi integrasi Google Sheets (master_barang).
 
 ---
 *Created with ❤️ for Retina Security Technology.*

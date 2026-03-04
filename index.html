@@ -3,175 +3,19 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Retina CCTV — Produk Keamanan Terpercaya</title>
-  <meta name="description"
-    content="Retina Security Technology — Toko CCTV online terpercaya. Camera CCTV, DVR, NVR, dan aksesoris keamanan dengan harga terbaik.">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>�</text></svg>">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Melayani pemasangan dan pembelian unit CCTV berkualitas dengan harga bersaing.">
+  <title>Retina CCTV - Pusat Grosir & Eceran CCTV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
-
-  <!-- ═══ NAVBAR ═══ -->
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <a href="index.html" class="navbar-brand">
-        <div class="brand-icon">🔒</div>
-        RETINA <span>CCTV</span>
-      </a>
-
-      <div class="navbar-links">
-        <a href="index.html" class="active">Produk</a>
-        <a href="https://retinacctv.id" target="_blank">Website Utama</a>
-        <a href="cart.html" class="cart-link">
-          🛒 Keranjang
-          <span class="cart-badge">0</span>
-        </a>
-      </div>
-
-      <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobile-menu">
-      <a href="index.html" class="active">📋 Produk</a>
-      <a href="https://retinacctv.id" target="_blank">🌐 Website Utama</a>
-      <a href="cart.html" class="mobile-cart-link">
-        🛒 Keranjang
-        <span class="cart-badge">0</span>
-      </a>
-    </div>
-  </nav>
-
-  <!-- ═══ HERO SECTION ═══ -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">🔒 Retina Security Technology</div>
-      <h1>
-        Solusi <span class="highlight">Keamanan CCTV</span>
-        Terpercaya
-      </h1>
-      <p>
-        Temukan pilihan camera CCTV, DVR, NVR, dan aksesoris keamanan
-        dengan kualitas terbaik dan harga kompetitif.
-      </p>
-
-      <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="search-input" placeholder="Cari produk... (camera, DVR, kabel, dll)">
-        <button class="search-clear" id="search-clear">✕</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ CATEGORIES ═══ -->
-  <section class="categories-section">
-    <div id="category-filters" class="category-filters">
-      <!-- Otomatis diisi dari data -->
-    </div>
-  </section>
-
-  <!-- ═══ PRODUCTS ═══ -->
-  <section class="products-section" id="products-section">
-    <div class="section-header">
-      <h2>Produk Kami</h2>
-    </div>
-    <div class="products-grid" id="products-grid">
-      <!-- Otomatis diisi dari Google Sheets -->
-    </div>
-  </section>
-
-  <!-- ═══ FEATURES ═══ -->
-  <section class="features-section">
-    <div class="features-grid">
-      <div class="feature-card animate-on-scroll">
-        <div class="feature-icon">🛡️</div>
-        <h3>Garansi Resmi</h3>
-        <p>Semua produk bergaransi resmi dengan dukungan service center</p>
-      </div>
-      <div class="feature-card animate-on-scroll">
-        <div class="feature-icon">🚚</div>
-        <h3>Pengiriman Cepat</h3>
-        <p>Pengiriman ke seluruh Indonesia dengan packaging aman</p>
-      </div>
-      <div class="feature-card animate-on-scroll">
-        <div class="feature-icon">💬</div>
-        <h3>Konsultasi Gratis</h3>
-        <p>Tim ahli kami siap membantu memilih produk yang tepat</p>
-      </div>
-      <div class="feature-card animate-on-scroll">
-        <div class="feature-icon">🔄</div>
-        <h3>Stok Real-time</h3>
-        <p>Informasi stok selalu update secara real-time</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ BOTTOM NAVIGATION (MOBILE) ═══ -->
-  <nav class="bottom-nav" id="bottom-nav">
-    <a href="index.html" class="bnav-item active">
-      <span class="bnav-icon">🏠</span>
-      <span class="bnav-label">Beranda</span>
-    </a>
-    <a href="javascript:void(0)" class="bnav-item"
-      onclick="document.getElementById('search-input')?.focus(); window.scrollTo(0,0);">
-      <span class="bnav-icon">🔍</span>
-      <span class="bnav-label">Cari</span>
-    </a>
-    <a href="cart.html" class="bnav-item bnav-cart">
-      <div class="bnav-icon-wrapper">
-        <span class="bnav-icon">🛒</span>
-        <span class="cart-badge">0</span>
-      </div>
-      <span class="bnav-label">Keranjang</span>
-    </a>
-    <a href="#" class="bnav-item" id="bnav-wa" target="_blank">
-      <span class="bnav-icon">💬</span>
-      <span class="bnav-label">Bantuan</span>
-    </a>
-  </nav>
-
-  <!-- ═══ FOOTER ═══ -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <span class="footer-text">© 2026 Retina Security Technology. All rights reserved.</span>
-      <div class="footer-links">
-        <a href="https://retinacctv.id" target="_blank">Website Utama</a>
-        <a href="https://retinacctv.id/instalasi/" target="_blank">Instalasi</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ═══ FLOATING WHATSAPP ═══ -->
-  <a href="" id="wa-float" class="wa-float" target="_blank" aria-label="WhatsApp">💬</a>
-
-  <!-- ═══ SCRIPTS ═══ -->
-  <script src="js/config.js"></script>
-  <script src="js/sheets.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/products.js"></script>
-  <script src="js/app.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      Products.init('products-grid');
-
-      // Set WhatsApp links
-      const waMessage = 'Halo Retina CCTV, saya ingin bertanya tentang produk.';
-      const waLink = `https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent(waMessage)}`;
-
-      const waFloat = document.getElementById('wa-float');
-      if (waFloat) waFloat.href = waLink;
-
-      const bnavWa = document.getElementById('bnav-wa');
-      if (bnavWa) bnavWa.href = waLink;
-    });
-  </script>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
 </body>
 
 </html>
