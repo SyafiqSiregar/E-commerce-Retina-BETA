@@ -1,5 +1,5 @@
 import { reactive, computed, watch } from 'vue';
-import { CONFIG } from '../config.js';
+import { CONFIG } from '../constants/config.js';
 import { useToast } from './useToast.js';
 
 const STORAGE_KEY = 'retina_cart';
@@ -86,6 +86,64 @@ export function useCart() {
         window.open(url, '_blank');
     }
 
+    async function checkoutMidtrans() {
+        if (state.items.length === 0) return;
+
+        try {
+            // 1. Dapatkan Token dari Backend Node.js kita
+            const response = await fetch('http://localhost:3000/api/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    orderDetails: {
+                        items: state.items.map(item => ({
+                            id: item.id,
+                            price: item.harga,
+                            quantity: item.quantity,
+                            name: item.nama
+                        }))
+                    },
+                    customerInfo: {
+                        name: "Pelanggan Retina CCTV",
+                        email: "customer@example.com",
+                        phone: "08111222333"
+                    }
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                showToast(`Error: ${data.error}`);
+                return;
+            }
+
+            // 2. Tampilkan Pop-up Midtrans menggunakan Snap.js
+            window.snap.pay(data.token, {
+                onSuccess: function (result) {
+                    showToast('Pembayaran Berhasil! Pesanan akan segera diproses.');
+                    clear(); // Kosongkan keranjang setelah sukses
+                },
+                onPending: function (result) {
+                    showToast('Menunggu pembayaran Anda...');
+                },
+                onError: function (result) {
+                    showToast('Pembayaran Gagal. Silakan coba lagi.');
+                },
+                onClose: function () {
+                    showToast('Anda menutup pop-up sebelum menyelesaikan pembayaran.');
+                }
+            });
+
+        } catch (error) {
+            console.error('Checkout error:', error);
+            showToast('Sistem Pembayaran sedang gangguan. Silakan Checkout via WhatsApp (Manual)');
+            checkoutWhatsApp(); // Fallback ke WhatsApp jika backend mati
+        }
+    }
+
     function copyOrder() {
         const message = generateWhatsAppMessage();
         if (!message) return;
@@ -106,6 +164,7 @@ export function useCart() {
         updateQuantity,
         clear,
         checkoutWhatsApp,
+        checkoutMidtrans,
         copyOrder
     };
 }

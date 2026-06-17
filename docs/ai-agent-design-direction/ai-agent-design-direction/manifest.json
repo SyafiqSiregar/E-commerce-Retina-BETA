@@ -1,0 +1,19 @@
+{
+  "project": "AI Agent Design Direction",
+  "style_reference": "https://styles.refero.design/style/4fa67bd1-f01d-454a-b522-4a0359ff9815",
+  "files": [
+    "README.md",
+    "docs/agent.md",
+    "docs/component-guidelines.md",
+    "docs/copywriting.md",
+    "docs/design.md",
+    "docs/interaction-guidelines.md",
+    "docs/page-structure.md",
+    "docs/product-requirements.md",
+    "docs/qa-checklist.md",
+    "prompts/build-agent-prompt.md",
+    "prompts/design-system-prompt.md",
+    "prompts/review-agent-prompt.md"
+  ],
+  "created_for": "SYAFIQ YUSUF IKHSAN W.S"
+}

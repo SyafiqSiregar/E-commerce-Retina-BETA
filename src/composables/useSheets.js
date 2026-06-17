@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { CONFIG } from '../config.js';
+import { CONFIG } from '../constants/config.js';
 
 const cachedProducts = ref([]);
 let lastFetch = 0;
@@ -17,48 +17,31 @@ export function useSheets() {
 
         loading.value = true;
         error.value = null;
-        const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(CONFIG.SHEET_NAME)}`;
+        const url = '/api/products';
 
         try {
             const response = await fetch(url);
-            const text = await response.text();
+            if (!response.ok) throw new Error('Gagal memuat produk dari server');
+            
+            const data = await response.json();
 
-            const jsonStr = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?/);
-            if (!jsonStr || !jsonStr[1]) throw new Error('Format respons Google Sheets tidak valid');
-
-            const data = JSON.parse(jsonStr[1]);
-            if (data.status === 'error') throw new Error(data.errors?.[0]?.message || 'Error dari Google Sheets');
-
-            const rows = data.table.rows;
-            const colMap = CONFIG.COLUMNS;
-
-            cachedProducts.value = rows
-                .filter(row => row.c)
-                .map(row => {
-                    const namaBarang = getCellValue(row.c[colMap.nama]) || 'Produk Tanpa Nama';
-                    const idBarang = getCellValue(row.c[colMap.id]) || namaBarang;
-
-                    const rawHarga = getCellValue(row.c[colMap.harga]);
-                    const cleanHarga = typeof rawHarga === 'string' ? rawHarga.replace(/[^0-9]/g, '') : rawHarga;
-
-                    const rawStok = getCellValue(row.c[colMap.stok]);
-                    const cleanStok = typeof rawStok === 'string' ? rawStok.replace(/[^0-9-]/g, '') : rawStok;
-
-                    return {
-                        id: idBarang,
-                        nama: namaBarang,
-                        kategori: getCellValue(row.c[colMap.kategori]) || 'Lainnya',
-                        harga: parseFloat(cleanHarga) || 0,
-                        stok: parseInt(cleanStok) || 0,
-                        gambar: getCellValue(row.c[colMap.gambar]) || CONFIG.PLACEHOLDER_IMAGE,
-                        deskripsi: getCellValue(row.c[colMap.deskripsi]) || '',
-                    };
-                });
+            cachedProducts.value = data.map(row => {
+                return {
+                    id: row.id || row.kode_barang,
+                    kode: row.kode_barang || '',
+                    nama: row.nama_barang || 'Produk Tanpa Nama',
+                    kategori: row.kategori || 'Lainnya',
+                    harga: parseFloat(row.harga_jual) || 0,
+                    stok: parseInt(row.stok) || 0,
+                    gambar: row.foto_url || CONFIG.PLACEHOLDER_IMAGE,
+                    deskripsi: row.deskripsi || '',
+                };
+            });
 
             lastFetch = now;
             return cachedProducts.value;
         } catch (e) {
-            console.error('Error fetching dari Google Sheets:', e);
+            console.error('Error fetching dari API Backend:', e);
             if (cachedProducts.value.length > 0) return cachedProducts.value;
             error.value = e.message;
             throw e;
@@ -67,10 +50,7 @@ export function useSheets() {
         }
     }
 
-    function getCellValue(cell) {
-        if (!cell) return '';
-        return cell.f || cell.v || '';
-    }
+
 
     async function getProductById(id) {
         const products = await fetchProducts();
