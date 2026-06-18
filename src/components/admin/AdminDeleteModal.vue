@@ -23,7 +23,7 @@
       <div class="flex items-center justify-end gap-3">
         <button 
           @click="$emit('close')"
-          class="px-4 py-2 bg-white border border-hairline text-ink-black text-[13px] font-gt-medium rounded-lg hover:bg-soft-canvas transition-colors"
+          class="px-4 py-2 bg-pure-white border border-hairline text-ink-black text-[13px] font-gt-medium rounded-lg hover:bg-soft-canvas transition-colors"
           :disabled="loading"
         >
           Batal

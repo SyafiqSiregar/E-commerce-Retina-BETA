@@ -24,7 +24,7 @@
         />
       </div>
       <div class="w-full md:w-48 shrink-0">
-        <select v-model="selectedCategory" class="w-full px-4 py-2 rounded-lg border border-hairline focus:border-shop-violet outline-none text-[13px] bg-white appearance-none">
+        <select v-model="selectedCategory" class="w-full px-4 py-2 rounded-lg border border-hairline focus:border-shop-violet outline-none text-[13px] bg-pure-white appearance-none">
           <option value="">Semua Kategori</option>
           <option v-for="cat in uniqueCategories" :key="cat" :value="cat">{{ cat }}</option>
         </select>
@@ -32,7 +32,7 @@
     </div>
 
     <!-- Data Table -->
-    <div class="bg-white border border-hairline rounded-xl overflow-x-auto flex-1">
+    <div class="bg-pure-white border border-hairline rounded-xl overflow-x-auto flex-1">
       <table class="w-full text-left border-collapse min-w-[800px]">
         <thead>
           <tr class="border-b border-hairline bg-soft-canvas text-[12px] font-gt-medium text-slate uppercase tracking-wider">

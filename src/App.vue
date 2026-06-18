@@ -15,10 +15,18 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
+import { useTheme } from './composables/useTheme';
 import SiteHeader from './components/layout/SiteHeader.vue';
 import AppFooter from './components/layout/AppFooter.vue';
 import WaFloat from './components/layout/WaFloat.vue';
 import ToastNotif from './components/ui/ToastNotif.vue';
+
+const { initTheme } = useTheme();
+
+onMounted(() => {
+  initTheme();
+});
 </script>
 
 <style>

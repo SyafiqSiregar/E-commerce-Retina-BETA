@@ -4,15 +4,15 @@
     
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-      <div class="bg-white p-6 rounded-2xl border border-hairline shadow-sm flex flex-col">
+      <div class="bg-pure-white p-6 rounded-2xl border border-hairline shadow-sm flex flex-col">
         <span class="text-[13px] text-slate mb-2">Total Produk Aktif</span>
         <span class="text-3xl font-gt-medium text-ink-black">{{ stats.totalProducts }}</span>
       </div>
-      <div class="bg-white p-6 rounded-2xl border border-hairline shadow-sm flex flex-col">
+      <div class="bg-pure-white p-6 rounded-2xl border border-hairline shadow-sm flex flex-col">
         <span class="text-[13px] text-slate mb-2">Total Kategori</span>
         <span class="text-3xl font-gt-medium text-ink-black">{{ stats.totalCategories }}</span>
       </div>
-      <div class="bg-white p-6 rounded-2xl border border-hairline shadow-sm flex flex-col">
+      <div class="bg-pure-white p-6 rounded-2xl border border-hairline shadow-sm flex flex-col">
         <span class="text-[13px] text-red-500 mb-2">Stok Menipis</span>
         <span class="text-3xl font-gt-medium text-ink-black">{{ stats.lowStock }}</span>
       </div>
@@ -21,7 +21,7 @@
     <!-- Recent Activity -->
     <div>
       <h2 class="text-lg font-gt-medium text-ink-black tracking-tight mb-4">Aktivitas Terbaru</h2>
-      <div class="bg-white border border-hairline rounded-2xl overflow-hidden">
+      <div class="bg-pure-white border border-hairline rounded-2xl overflow-hidden">
         
         <div v-if="loadingLogs" class="p-8 text-center text-slate text-[14px]">
           <span class="w-5 h-5 border-2 border-shop-violet/30 border-t-shop-violet rounded-full animate-spin inline-block mb-2"></span>

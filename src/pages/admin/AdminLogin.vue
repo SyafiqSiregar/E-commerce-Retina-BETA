@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-[#f8f9fa] font-gt px-4">
-    <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-shop-lg border border-hairline">
+  <div class="min-h-screen flex items-center justify-center bg-soft-canvas font-gt px-4">
+    <div class="w-full max-w-md bg-pure-white p-8 rounded-2xl shadow-shop-lg border border-hairline">
       <div class="flex justify-center mb-6">
         <div class="w-12 h-12 bg-shop-violet rounded-xl flex items-center justify-center text-white text-xl font-gt-medium">R</div>
       </div>

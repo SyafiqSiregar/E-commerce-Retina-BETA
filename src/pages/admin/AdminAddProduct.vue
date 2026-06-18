@@ -8,7 +8,7 @@
       <h1 class="text-2xl font-gt-medium text-ink-black tracking-tight">Tambah Produk Baru</h1>
     </div>
 
-    <form @submit.prevent="submitForm" class="bg-white border border-hairline rounded-2xl p-6 md:p-8 flex flex-col gap-6 shadow-sm">
+    <form @submit.prevent="submitForm" class="bg-pure-white border border-hairline rounded-2xl p-6 md:p-8 flex flex-col gap-6 shadow-sm">
       <div v-if="error" class="bg-red-50 text-red-500 p-4 rounded-lg text-sm border border-red-100">
         {{ error }}
       </div>

@@ -1,11 +1,14 @@
 <template>
-  <div class="min-h-screen bg-[#f8f9fa] flex flex-col md:flex-row font-gt">
+  <div class="min-h-screen bg-soft-canvas flex flex-col md:flex-row font-gt">
     
     <!-- Sidebar -->
-    <aside class="w-full md:w-64 bg-white border-r border-hairline flex flex-col hidden md:flex shrink-0">
-      <div class="p-6 flex items-center gap-3 border-b border-hairline">
-        <div class="w-8 h-8 bg-shop-violet rounded-lg flex items-center justify-center text-white font-gt-medium">R</div>
-        <span class="font-gt-medium text-ink-black tracking-tight text-[15px]">Retina Admin</span>
+    <aside class="w-full md:w-64 bg-pure-white border-r border-hairline flex flex-col hidden md:flex shrink-0">
+      <div class="p-6 flex items-center justify-between border-b border-hairline">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-shop-violet rounded-lg flex items-center justify-center text-white font-gt-medium">R</div>
+          <span class="font-gt-medium text-ink-black tracking-tight text-[15px]">Retina Admin</span>
+        </div>
+        <ThemeToggle />
       </div>
       
       <nav class="flex-1 p-4 flex flex-col gap-1">
@@ -38,9 +41,12 @@
     <!-- Main Content -->
     <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
       <!-- Mobile Header -->
-      <header class="md:hidden bg-white border-b border-hairline p-4 flex justify-between items-center">
+      <header class="md:hidden bg-pure-white border-b border-hairline p-4 flex justify-between items-center">
         <span class="font-gt-medium">Retina Admin</span>
-        <button @click="mobileMenuOpen = !mobileMenuOpen">Menu</button>
+        <div class="flex items-center gap-2">
+          <ThemeToggle />
+          <button @click="mobileMenuOpen = !mobileMenuOpen">Menu</button>
+        </div>
       </header>
 
       <div class="flex-1 overflow-auto p-6 md:p-8">
@@ -54,6 +60,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useAdminAuth } from '../../composables/useAdminAuth';
+import ThemeToggle from '../../components/common/ThemeToggle.vue';
 
 const { logout } = useAdminAuth();
 const mobileMenuOpen = ref(false);

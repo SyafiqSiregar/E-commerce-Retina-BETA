@@ -26,7 +26,7 @@
       Memuat kategori...
     </div>
     <div v-else class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <div v-for="(cat, index) in uniqueCategories" :key="index" class="bg-white border border-hairline rounded-xl p-5 hover:border-shop-violet transition-colors group cursor-default">
+      <div v-for="(cat, index) in uniqueCategories" :key="index" class="bg-pure-white border border-hairline rounded-xl p-5 hover:border-shop-violet transition-colors group cursor-default">
         <div class="w-10 h-10 rounded-lg bg-soft-canvas flex items-center justify-center text-shop-violet mb-4 group-hover:bg-shop-violet group-hover:text-white transition-colors">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
         </div>

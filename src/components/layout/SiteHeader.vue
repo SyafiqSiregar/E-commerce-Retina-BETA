@@ -27,8 +27,9 @@
         </router-link>
       </nav>
 
-      <!-- Desktop CTA (Cart) -->
-      <div class="hidden md:flex items-center">
+      <!-- Desktop CTA (Cart & Theme) -->
+      <div class="hidden md:flex items-center gap-2">
+        <ThemeToggle />
         <router-link to="/cart" class="relative p-2 text-ink-black hover:text-shop-violet transition-colors group">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
@@ -41,6 +42,7 @@
 
       <!-- Mobile Menu Button & Cart -->
       <div class="flex items-center gap-4 md:hidden">
+        <ThemeToggle />
         <router-link to="/cart" class="relative p-2 text-ink-black">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
@@ -77,6 +79,7 @@
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCart } from '../../composables/useCart';
+import ThemeToggle from '../common/ThemeToggle.vue';
 
 const route = useRoute();
 const currentPath = computed(() => route.path);
