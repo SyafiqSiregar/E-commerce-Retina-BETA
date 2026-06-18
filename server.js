@@ -163,6 +163,10 @@ app.post('/api/webhook/midtrans', async (req, res) => {
 });
 
 // Start Server
-app.listen(port, () => {
-    console.log(`Backend Server Retina CCTV Payment Gateway berjalan di http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(port, () => {
+        console.log(`Backend Server Retina CCTV Payment Gateway berjalan di http://localhost:${port}`);
+    });
+}
+
+export default app;
