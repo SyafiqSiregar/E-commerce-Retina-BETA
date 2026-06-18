@@ -22,6 +22,7 @@
         v-for="product in products" 
         :key="product.id" 
         :product="product" 
+        @open-modal="$emit('open-modal', $event)"
       />
     </template>
   </div>
@@ -40,4 +41,6 @@ defineProps({
     default: false
   }
 });
+
+defineEmits(['open-modal']);
 </script>

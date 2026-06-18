@@ -11,9 +11,16 @@
         <h2 class="text-xl font-gt-medium tracking-tight text-ink-black">{{ activeCategory === 'Semua' ? 'Semua Produk' : 'Kategori: ' + activeCategory }}</h2>
         <span class="text-[13px] text-slate">{{ filteredProducts.length }} Produk</span>
       </div>
-      <ProductGrid :products="filteredProducts" :loading="loading" />
+      <ProductGrid :products="filteredProducts" :loading="loading" @open-modal="handleOpenModal" />
     </section>
     <FeatureCards />
+
+    <!-- Product Detail Modal -->
+    <ProductModal 
+      :is-open="isModalOpen" 
+      :product-id="selectedProductId" 
+      @close="closeModal" 
+    />
   </main>
 </template>
 
@@ -24,6 +31,7 @@ import { useSheets } from '../composables/useSheets';
 import HeroSection from '../components/sections/HeroSection.vue';
 import CategoryFilter from '../components/common/CategoryFilter.vue';
 import ProductGrid from '../components/common/ProductGrid.vue';
+import ProductModal from '../components/common/ProductModal.vue';
 import FeatureCards from '../components/sections/FeatureCards.vue';
 import { initIntersectionObserver } from '../composables/useIntersectionObserver';
 
@@ -33,6 +41,9 @@ const { cachedProducts, loading, fetchProducts, getCategories } = useSheets();
 const categories = ref(['Semua']);
 const activeCategory = ref('Semua');
 const searchQuery = ref('');
+
+const isModalOpen = ref(false);
+const selectedProductId = ref(null);
 
 const filteredProducts = computed(() => {
     return cachedProducts.value.filter(p => {
@@ -51,6 +62,16 @@ const handleSearch = (query) => {
 
 const handleCategorySelect = (cat) => {
     activeCategory.value = cat;
+};
+
+const handleOpenModal = (id) => {
+    selectedProductId.value = id;
+    isModalOpen.value = true;
+};
+
+const closeModal = () => {
+    isModalOpen.value = false;
+    // selectedProductId.value = null; // Opsional, bisa direset jika perlu
 };
 
 onMounted(async () => {

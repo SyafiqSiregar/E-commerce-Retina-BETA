@@ -87,11 +87,29 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Modals -->
+    <AdminDeleteModal 
+      :isOpen="isDeleteModalOpen" 
+      :productName="selectedProduct?.nama_barang"
+      :loading="isDeleting"
+      @close="closeDeleteModal"
+      @confirm="confirmDelete"
+    />
+    
+    <AdminEditModal 
+      :isOpen="isEditModalOpen" 
+      :product="selectedProduct"
+      @close="closeEditModal"
+      @success="onEditSuccess"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import AdminDeleteModal from '../../components/admin/AdminDeleteModal.vue';
+import AdminEditModal from '../../components/admin/AdminEditModal.vue';
 
 const products = ref([]);
 const loading = ref(true);
@@ -132,28 +150,64 @@ const filteredProducts = computed(() => {
     return result;
 });
 
-const deleteProduct = async (id, name) => {
-    if (confirm(`Apakah Anda yakin ingin menghapus produk "${name}"?\nData yang dihapus tidak bisa dikembalikan.`)) {
-        try {
-            const token = localStorage.getItem('admin_token');
-            const res = await fetch(`/api/products/${id}`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (res.ok) {
-                products.value = products.value.filter(p => p.id !== id);
-                alert('Produk berhasil dihapus.');
-            } else {
-                const data = await res.json();
-                alert(data.error || 'Gagal menghapus produk.');
-            }
-        } catch (e) {
-            alert('Terjadi kesalahan pada jaringan.');
+// State untuk Modals
+const isDeleteModalOpen = ref(false);
+const isEditModalOpen = ref(false);
+const selectedProduct = ref(null);
+const isDeleting = ref(false);
+
+const deleteProduct = (id, name) => {
+    selectedProduct.value = { id, nama_barang: name };
+    isDeleteModalOpen.value = true;
+};
+
+const closeDeleteModal = () => {
+    isDeleteModalOpen.value = false;
+    if (!isDeleting.value) selectedProduct.value = null;
+};
+
+const confirmDelete = async () => {
+    if (!selectedProduct.value) return;
+    isDeleting.value = true;
+    try {
+        const token = localStorage.getItem('admin_token');
+        const res = await fetch(`/api/products/${selectedProduct.value.id}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+            products.value = products.value.filter(p => p.id !== selectedProduct.value.id);
+            closeDeleteModal();
+        } else {
+            const data = await res.json();
+            alert(data.error || 'Gagal menghapus produk.');
         }
+    } catch (e) {
+        alert('Terjadi kesalahan pada jaringan.');
+    } finally {
+        isDeleting.value = false;
     }
 };
 
 const editProduct = (id) => {
-    alert('Fitur Edit Produk sedang dalam tahap pengembangan dan akan aktif setelah database utama terhubung.');
+    const p = products.value.find(p => p.id === id);
+    if (p) {
+        selectedProduct.value = { ...p };
+        isEditModalOpen.value = true;
+    }
+};
+
+const closeEditModal = () => {
+    isEditModalOpen.value = false;
+    selectedProduct.value = null;
+};
+
+const onEditSuccess = (updatedProduct) => {
+    const index = products.value.findIndex(p => p.id === updatedProduct.id);
+    if (index !== -1) {
+        products.value[index] = updatedProduct;
+    }
+    // Perbarui fetch agar mengambil foto yang baru
+    fetchProducts();
 };
 </script>

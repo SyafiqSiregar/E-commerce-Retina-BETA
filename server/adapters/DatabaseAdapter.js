@@ -106,5 +106,21 @@ export const DatabaseAdapter = {
             // Mock audit log for UI testing (silent fail)
             console.log('Mock Audit Log saved:', logData);
         }
+    },
+
+    async getAuditLogs() {
+        try {
+            const doc = getDoc();
+            const sheet = doc.sheetsByTitle['LOG_AKTIVITAS'];
+            if (!sheet) return [];
+            
+            const rows = await sheet.getRows();
+            // Ambil 5 aktivitas terbaru
+            return rows.map(r => r.toObject()).reverse().slice(0, 5);
+        } catch (error) {
+            return [
+                { id: '1', user: 'admin@retina.id', aksi: 'LOGIN', detail: 'Berhasil login ke sistem', timestamp: new Date().toISOString() }
+            ];
+        }
     }
 };

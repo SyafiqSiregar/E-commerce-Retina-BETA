@@ -11,6 +11,22 @@ export const getProducts = async (req, res) => {
     }
 };
 
+export const getProductById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const product = await DatabaseAdapter.getProductById(id);
+        
+        if (!product) {
+            return res.status(404).json({ success: false, error: 'Produk tidak ditemukan' });
+        }
+        
+        res.json({ success: true, data: product });
+    } catch (error) {
+        console.error('Get Product By Id Error:', error);
+        res.status(500).json({ success: false, error: 'Gagal mengambil detail produk' });
+    }
+};
+
 export const addProduct = async (req, res) => {
     try {
         const { nama_barang, kategori, deskripsi, harga_beli, harga_jual, stok, satuan } = req.body;

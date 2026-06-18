@@ -10,33 +10,40 @@ const port = process.env.PORT || 3000;
 import cookieParser from 'cookie-parser';
 import authRoutes from './server/routes/authRoutes.js';
 import productRoutes from './server/routes/productRoutes.js';
+import { DatabaseAdapter } from './server/adapters/DatabaseAdapter.js';
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+// Inisialisasi Database
+import { initGoogleSheets } from './server/adapters/googleSheetsAdapter.js';
+initGoogleSheets().catch(err => console.error("Gagal konek ke Google Sheets:", err));
+
 // Custom Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+
+// Log Route
+import { verifyToken } from './server/middlewares/authMiddleware.js';
+app.get('/api/logs', verifyToken, async (req, res) => {
+    try {
+        const logs = await DatabaseAdapter.getAuditLogs();
+        res.json(logs);
+    } catch (e) {
+        res.status(500).json({ error: 'Gagal mengambil log aktivitas' });
+    }
+});
 
 // Initialize Midtrans Snap Client
 const snap = new midtransClient.Snap({
     // Tentukan environment: false untuk sandbox/testing, true untuk production
     isProduction: false,
     serverKey: process.env.MIDTRANS_SERVER_KEY,
-    clientKey: process.env.MIDTRANS_CLIENT_KEY
+    clientKey: process.env.VITE_MIDTRANS_CLIENT_KEY || process.env.MIDTRANS_CLIENT_KEY
 });
 
-// Helper function: Simulasi database produk
-const getProductDetails = (productId) => {
-    // Dalam realita, ini query ke database MySQL / MongoDB
-    const mockDatabase = {
-        'CCTV-001': { name: 'Outdoor PTZ Camera', price: 850000 },
-        'CCTV-002': { name: 'Indoor Dome Camera', price: 450000 },
-        'SYS-001': { name: 'NVR 8 Channel System', price: 2150000 }
-    };
-    return mockDatabase[productId];
-};
+// Helper function dihapus, sekarang pakai Database riil
 
 /**
  * Route untuk membuat transaksi (Mendapatkan Snap Token)
@@ -53,12 +60,12 @@ app.post('/api/checkout', async (req, res) => {
 
         // 2. Hitung Ulang Harga dari Server (Mencegah Tampering Harga dari Frontend)
         let calculatedGrossAmount = 0;
-        const itemDetails = orderDetails.items.map(item => {
-            const product = getProductDetails(item.id);
+        const itemDetails = await Promise.all(orderDetails.items.map(async (item) => {
+            const product = await DatabaseAdapter.getProductById(item.id);
 
             // Jika ID tidak ada di mock DB kita lewati saja atau fallback
-            const itemPrice = product ? product.price : item.price;
-            const itemName = product ? product.name : item.name;
+            const itemPrice = product ? Number(product.harga_jual) : item.price;
+            const itemName = product ? product.nama_barang : item.name;
 
             const subtotal = itemPrice * item.quantity;
             calculatedGrossAmount += subtotal;
@@ -67,9 +74,9 @@ app.post('/api/checkout', async (req, res) => {
                 id: item.id,
                 price: itemPrice,
                 quantity: item.quantity,
-                name: itemName
+                name: itemName.substring(0, 50) // Midtrans limit string 50
             };
-        });
+        }));
 
         // 3. Generate Nomor Tagihan Unik
         const timeStamp = new Date().getTime();
@@ -132,7 +139,15 @@ app.post('/api/webhook/midtrans', async (req, res) => {
             }
         } else if (transactionStatus == 'settlement') {
             console.log('Status: Pembayaran Berhasil Diselesaikan (Transfer Bank/QRIS)');
-            // *TODO LOKASI*: Lakukan update status "Pesanan Lunas" di Google Sheet atau Database di sini
+            
+            // Lakukan update status "Pesanan Lunas" di Google Sheet (Audit Log)
+            await DatabaseAdapter.addAuditLog({
+                id: orderId,
+                user: 'Midtrans System',
+                aksi: 'PAYMENT_SUCCESS',
+                detail: `Pembayaran Lunas untuk Order: ${orderId}`,
+                timestamp: new Date().toISOString()
+            });
 
         } else if (transactionStatus == 'cancel' || transactionStatus == 'deny' || transactionStatus == 'expire') {
             console.log('Status: Pembayaran Gagal / Dibatalkan / Kedaluwarsa');

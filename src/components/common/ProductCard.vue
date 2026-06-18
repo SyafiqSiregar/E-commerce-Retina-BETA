@@ -1,5 +1,8 @@
 <template>
-  <div class="animate-on-scroll bg-pure-white border border-hairline rounded-cards overflow-hidden flex flex-col group hover:border-ink-black hover:bg-soft-canvas transition-all duration-300 ease-out">
+  <div 
+    class="animate-on-scroll bg-pure-white border border-hairline rounded-cards overflow-hidden flex flex-col group hover:border-ink-black hover:bg-soft-canvas active:scale-95 transition-all duration-150 ease-out cursor-pointer"
+    @click="$emit('open-modal', product.id)"
+  >
     <!-- Image Area -->
     <div class="relative w-full aspect-square bg-soft-canvas overflow-hidden">
       <img :src="product.gambar" :alt="product.nama" class="w-full h-full object-cover" @error="$event.target.src = CONFIG.PLACEHOLDER_IMAGE">
@@ -14,15 +17,15 @@
     <!-- Details -->
     <div class="p-4 flex flex-col flex-1">
       <span class="text-[11px] text-slate font-gt mb-1">{{ product.kategori }}</span>
-      <router-link :to="`/product/${encodeURIComponent(String(product.id))}`" class="text-[14px] font-gt-medium tracking-tight text-ink-black line-clamp-2 leading-tight hover:text-shop-violet transition-colors">
+      <span class="text-[14px] font-gt-medium tracking-tight text-ink-black line-clamp-2 leading-tight group-hover:text-shop-violet transition-colors">
         {{ product.nama }}
-      </router-link>
+      </span>
       
       <div class="mt-auto pt-4 flex items-center justify-between">
         <span class="text-[14px] font-gt-medium text-ink-black tracking-tight">{{ formatPrice(product.harga) }}</span>
         
         <button 
-          @click="addToCart" 
+          @click.stop="addToCart" 
           :disabled="product.stok === 0"
           class="w-8 h-8 rounded-full border border-hairline flex items-center justify-center text-ink-black hover:border-ink-black disabled:opacity-50 disabled:bg-soft-canvas disabled:border-hairline transition-colors"
           aria-label="Tambah ke keranjang"
@@ -46,6 +49,8 @@ const props = defineProps({
     required: true
   }
 });
+
+defineEmits(['open-modal']);
 
 const { addItem, formatPrice } = useCart();
 

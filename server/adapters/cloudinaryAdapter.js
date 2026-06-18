@@ -1,21 +1,31 @@
-import { v2 as cloudinary } from 'cloudinary';
+import fs from 'fs';
+import path from 'path';
 
 export const initCloudinary = () => {
-    cloudinary.config({
-        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET
-    });
+    // Tidak melakukan apa-apa karena Cloudinary diganti Local Storage
+    console.log('Menggunakan Local Storage untuk gambar (Cloudinary disabled)');
 };
 
 export const uploadImage = async (filePath) => {
     try {
-        const result = await cloudinary.uploader.upload(filePath, {
-            folder: 'retina_cctv_products',
-        });
-        return result.secure_url;
+        const publicDir = path.join(process.cwd(), 'public');
+        const uploadDir = path.join(publicDir, 'uploads');
+        
+        // Buat folder public/uploads jika belum ada
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+
+        const fileName = path.basename(filePath);
+        const destPath = path.join(uploadDir, fileName);
+
+        // Pindahkan file dari temp ke public/uploads
+        fs.renameSync(filePath, destPath);
+
+        // Kembalikan URL relatif yang bisa diakses via Vite (misal: /uploads/namafile.jpg)
+        return `/uploads/${fileName}`;
     } catch (error) {
-        console.error('Cloudinary Upload Error:', error);
-        throw new Error('Gagal mengunggah gambar ke cloud storage');
+        console.error('Local Upload Error:', error);
+        throw new Error('Gagal menyimpan gambar secara lokal');
     }
 };
