@@ -18,7 +18,7 @@
             v-model="email" 
             type="email" 
             required
-            class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none transition-all text-[14px]"
+            class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-transparent text-ink-black focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none transition-all text-[14px]"
             placeholder="admin@retina.id"
           />
         </div>
@@ -29,7 +29,7 @@
             v-model="password" 
             type="password" 
             required
-            class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none transition-all text-[14px]"
+            class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-transparent text-ink-black focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none transition-all text-[14px]"
             placeholder="••••••••"
           />
         </div>
@@ -37,9 +37,9 @@
         <button 
           type="submit" 
           :disabled="loading"
-          class="w-full mt-2 bg-ink-black hover:bg-near-black text-white font-gt-medium py-3 rounded-lg transition-colors flex items-center justify-center disabled:opacity-70"
+          class="w-full mt-2 bg-ink-black hover:bg-near-black text-pure-white font-gt-medium py-3 rounded-lg transition-colors flex items-center justify-center disabled:opacity-70"
         >
-          <span v-if="loading" class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+          <span v-if="loading" class="w-5 h-5 border-2 border-pure-white/30 border-t-pure-white rounded-full animate-spin"></span>
           <span v-else>Masuk ke Dashboard</span>
         </button>
       </form>
