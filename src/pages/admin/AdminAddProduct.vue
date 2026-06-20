@@ -17,11 +17,11 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label class="block text-[13px] font-gt-medium text-ink-black mb-1.5">Nama Produk *</label>
-          <input v-model="form.nama_barang" type="text" required class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none text-[14px]" placeholder="Contoh: Hikvision Indoor Dome" />
+          <input v-model="form.nama_barang" type="text" required class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-pure-white text-ink-black focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none text-[14px]" placeholder="Contoh: Hikvision Indoor Dome" />
         </div>
         <div>
           <label class="block text-[13px] font-gt-medium text-ink-black mb-1.5">Kategori *</label>
-          <input v-model="form.kategori" type="text" required class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none text-[14px]" placeholder="Contoh: Kamera Indoor" />
+          <input v-model="form.kategori" type="text" required class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-pure-white text-ink-black focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none text-[14px]" placeholder="Contoh: Kamera Indoor" />
         </div>
       </div>
 
@@ -29,18 +29,18 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label class="block text-[13px] font-gt-medium text-ink-black mb-1.5">Harga Jual (Rp) *</label>
-          <input v-model="form.harga_jual" type="number" min="0" required class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none text-[14px]" placeholder="0" />
+          <input v-model="form.harga_jual" type="number" min="0" required class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-pure-white text-ink-black focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none text-[14px]" placeholder="0" />
         </div>
         <div>
           <label class="block text-[13px] font-gt-medium text-ink-black mb-1.5">Stok Awal *</label>
-          <input v-model="form.stok" type="number" min="0" required class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none text-[14px]" placeholder="0" />
+          <input v-model="form.stok" type="number" min="0" required class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-pure-white text-ink-black focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none text-[14px]" placeholder="0" />
         </div>
       </div>
 
       <!-- Deskripsi -->
       <div>
         <label class="block text-[13px] font-gt-medium text-ink-black mb-1.5">Deskripsi Produk</label>
-        <textarea v-model="form.deskripsi" rows="4" class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none text-[14px]" placeholder="Tuliskan spesifikasi produk..."></textarea>
+        <textarea v-model="form.deskripsi" rows="4" class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-pure-white text-ink-black focus:border-shop-violet focus:ring-1 focus:ring-shop-violet outline-none text-[14px]" placeholder="Tuliskan spesifikasi produk..."></textarea>
       </div>
 
       <!-- Upload Foto -->
@@ -58,8 +58,8 @@
       </div>
 
       <div class="pt-4 border-t border-hairline flex justify-end">
-        <button type="submit" :disabled="loading" class="bg-ink-black hover:bg-near-black text-white px-8 py-3 rounded-lg font-gt-medium transition-colors disabled:opacity-70 flex items-center gap-2">
-          <span v-if="loading" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+        <button type="submit" :disabled="loading" class="bg-ink-black hover:bg-near-black text-pure-white px-8 py-3 rounded-lg font-gt-medium transition-colors disabled:opacity-70 flex items-center gap-2">
+          <span v-if="loading" class="w-4 h-4 border-2 border-current border-t-transparent opacity-80 rounded-full animate-spin"></span>
           {{ loading ? 'Menyimpan...' : 'Simpan Produk' }}
         </button>
       </div>

@@ -23,11 +23,11 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label class="block text-[12px] font-gt-medium text-slate mb-1.5 uppercase tracking-wider">Nama Produk *</label>
-              <input v-model="form.nama_barang" type="text" required class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet outline-none text-[14px]" />
+              <input v-model="form.nama_barang" type="text" required class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-pure-white text-ink-black focus:border-shop-violet outline-none text-[14px]" />
             </div>
             <div>
               <label class="block text-[12px] font-gt-medium text-slate mb-1.5 uppercase tracking-wider">Kategori *</label>
-              <input v-model="form.kategori" type="text" required class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet outline-none text-[14px]" />
+              <input v-model="form.kategori" type="text" required class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-pure-white text-ink-black focus:border-shop-violet outline-none text-[14px]" />
             </div>
           </div>
 
@@ -35,18 +35,18 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label class="block text-[12px] font-gt-medium text-slate mb-1.5 uppercase tracking-wider">Harga Jual (Rp) *</label>
-              <input v-model="form.harga_jual" type="number" min="0" required class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet outline-none text-[14px]" />
+              <input v-model="form.harga_jual" type="number" min="0" required class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-pure-white text-ink-black focus:border-shop-violet outline-none text-[14px]" />
             </div>
             <div>
               <label class="block text-[12px] font-gt-medium text-slate mb-1.5 uppercase tracking-wider">Stok *</label>
-              <input v-model="form.stok" type="number" min="0" required class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet outline-none text-[14px]" />
+              <input v-model="form.stok" type="number" min="0" required class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-pure-white text-ink-black focus:border-shop-violet outline-none text-[14px]" />
             </div>
           </div>
 
           <!-- Deskripsi -->
           <div>
             <label class="block text-[12px] font-gt-medium text-slate mb-1.5 uppercase tracking-wider">Deskripsi Produk</label>
-            <textarea v-model="form.deskripsi" rows="3" class="w-full px-4 py-2.5 rounded-lg border border-hairline focus:border-shop-violet outline-none text-[14px]"></textarea>
+            <textarea v-model="form.deskripsi" rows="3" class="w-full px-4 py-2.5 rounded-lg border border-hairline bg-pure-white text-ink-black focus:border-shop-violet outline-none text-[14px]"></textarea>
           </div>
 
           <!-- Foto -->

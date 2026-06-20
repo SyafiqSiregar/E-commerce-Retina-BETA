@@ -27,10 +27,14 @@
         <button 
           @click.stop="addToCart" 
           :disabled="product.stok === 0"
-          class="w-8 h-8 rounded-full border border-hairline flex items-center justify-center text-ink-black hover:border-ink-black disabled:opacity-50 disabled:bg-soft-canvas disabled:border-hairline transition-colors"
+          class="w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300"
+          :class="isAdded ? 'border-shop-violet bg-shop-violet text-pure-white scale-110' : 'border-hairline text-ink-black hover:border-ink-black disabled:opacity-50 disabled:bg-soft-canvas disabled:border-hairline'"
           aria-label="Tambah ke keranjang"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg v-if="isAdded" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
           </svg>
         </button>
@@ -40,6 +44,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { CONFIG } from '../../constants/config';
 import { useCart } from '../../composables/useCart';
 
@@ -54,9 +59,15 @@ defineEmits(['open-modal']);
 
 const { addItem, formatPrice } = useCart();
 
+const isAdded = ref(false);
+
 const addToCart = () => {
   if (props.product.stok > 0) {
     addItem(props.product);
+    isAdded.value = true;
+    setTimeout(() => {
+      isAdded.value = false;
+    }, 1000);
   }
 };
 </script>

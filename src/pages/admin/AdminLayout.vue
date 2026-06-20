@@ -39,17 +39,40 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <main class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
       <!-- Mobile Header -->
-      <header class="md:hidden bg-pure-white border-b border-hairline p-4 flex justify-between items-center">
-        <span class="font-gt-medium">Retina Admin</span>
-        <div class="flex items-center gap-2">
+      <header class="md:hidden bg-pure-white border-b border-hairline p-4 flex justify-between items-center z-10">
+        <span class="font-gt-medium text-[15px] text-ink-black">Retina Admin</span>
+        <div class="flex items-center gap-4">
           <ThemeToggle />
-          <button @click="mobileMenuOpen = !mobileMenuOpen">Menu</button>
+          <button @click="mobileMenuOpen = true" class="text-[14px] font-gt-medium text-ink-black">Menu</button>
         </div>
       </header>
 
-      <div class="flex-1 overflow-auto p-6 md:p-8">
+      <!-- Mobile Menu Overlay -->
+      <div v-if="mobileMenuOpen" class="fixed inset-0 z-[100] bg-pure-white flex flex-col md:hidden">
+        <div class="p-4 border-b border-hairline flex justify-between items-center">
+          <span class="font-gt-medium text-[15px] text-ink-black">Retina Admin</span>
+          <button @click="mobileMenuOpen = false" class="text-[14px] font-gt-medium text-slate hover:text-ink-black">Tutup</button>
+        </div>
+        <nav class="flex-1 p-4 flex flex-col gap-2">
+          <router-link to="/admin" @click="mobileMenuOpen = false" exact-active-class="bg-soft-canvas text-ink-black font-gt-medium" class="px-4 py-3 rounded-lg text-[15px] text-slate hover:bg-soft-canvas transition-colors">
+            Dashboard
+          </router-link>
+          <router-link to="/admin/products" @click="mobileMenuOpen = false" active-class="bg-soft-canvas text-ink-black font-gt-medium" class="px-4 py-3 rounded-lg text-[15px] text-slate hover:bg-soft-canvas transition-colors">
+            Produk
+          </router-link>
+          <router-link to="/admin/categories" @click="mobileMenuOpen = false" active-class="bg-soft-canvas text-ink-black font-gt-medium" class="px-4 py-3 rounded-lg text-[15px] text-slate hover:bg-soft-canvas transition-colors">
+            Kategori
+          </router-link>
+        </nav>
+        <div class="p-4 border-t border-hairline flex flex-col gap-3">
+          <router-link to="/" class="text-[15px] text-slate text-center py-3 border border-hairline rounded-lg hover:bg-soft-canvas">Kembali ke Web</router-link>
+          <button @click="handleLogout" class="text-[15px] text-red-500 text-center py-3 border border-red-200 bg-red-50 rounded-lg hover:bg-red-100">Logout</button>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-auto p-4 md:p-8">
         <router-view />
       </div>
     </main>

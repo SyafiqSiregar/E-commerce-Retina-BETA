@@ -78,9 +78,18 @@
             <button 
               @click="addToCart" 
               :disabled="product.stok === 0"
-              class="w-full bg-shop-violet text-pure-white h-[48px] rounded-buttons font-gt-medium text-[14px] flex items-center justify-center hover:bg-opacity-90 active:scale-95 transition-all duration-150 disabled:opacity-50 disabled:bg-concrete disabled:shadow-none shadow-shop-lg"
+              class="w-full h-[48px] rounded-buttons font-gt-medium text-[14px] flex items-center justify-center transition-all duration-300 disabled:opacity-50 disabled:bg-concrete disabled:shadow-none"
+              :class="isAdded ? 'bg-pure-white text-shop-violet border border-shop-violet shadow-none' : 'bg-shop-violet text-pure-white shadow-shop-lg hover:bg-opacity-90 active:scale-95'"
             >
-              {{ product.stok === 0 ? 'Stok Habis' : 'Tambah ke Keranjang' }}
+              <span v-if="isAdded" class="flex items-center gap-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Berhasil
+              </span>
+              <span v-else>
+                {{ product.stok === 0 ? 'Stok Habis' : 'Tambah ke Keranjang' }}
+              </span>
             </button>
           </div>
         </div>
@@ -105,6 +114,7 @@ const { addItem, formatPrice } = useCart();
 const loading = ref(false);
 const product = ref(null);
 const isEntering = ref(false);
+const isAdded = ref(false);
 const modalRef = ref(null);
 
 const fetchProduct = async (id) => {
@@ -154,7 +164,11 @@ const addToCart = () => {
       stok: product.value.stok,
       gambar: product.value.foto_url
     });
-    closeModal();
+    isAdded.value = true;
+    setTimeout(() => {
+      isAdded.value = false;
+      closeModal();
+    }, 1000);
   }
 };
 

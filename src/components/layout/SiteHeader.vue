@@ -34,9 +34,16 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
           </svg>
-          <span v-if="cartStore.totalItems > 0" class="absolute top-1 right-0 bg-shop-violet text-pure-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-gt-medium group-hover:scale-110 transition-transform">
-            {{ cartStore.totalItems }}
+          <span v-if="totalItems > 0" 
+            class="absolute top-1 right-0 bg-red-500 text-pure-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-gt-medium transition-transform duration-300"
+            :class="isPopping ? 'scale-150' : 'group-hover:scale-110'"
+          >
+            {{ totalItems }}
           </span>
+          <!-- Floating +1 -->
+          <div v-for="id in floatingPlusOnes" :key="id" class="absolute top-0 right-0 pointer-events-none animate-float-up text-shop-violet font-gt-bold text-[14px] drop-shadow-sm z-50">
+            +1
+          </div>
         </router-link>
       </div>
 
@@ -47,9 +54,16 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
           </svg>
-          <span v-if="cartStore.totalItems > 0" class="absolute top-1 right-0 bg-shop-violet text-pure-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-gt-medium">
-            {{ cartStore.totalItems }}
+          <span v-if="totalItems > 0" 
+            class="absolute top-1 right-0 bg-red-500 text-pure-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-gt-medium transition-transform duration-300"
+            :class="isPopping ? 'scale-150' : 'scale-100'"
+          >
+            {{ totalItems }}
           </span>
+          <!-- Floating +1 -->
+          <div v-for="id in floatingPlusOnes" :key="`mob-${id}`" class="absolute top-0 right-0 pointer-events-none animate-float-up text-shop-violet font-gt-bold text-[14px] drop-shadow-sm z-50">
+            +1
+          </div>
         </router-link>
         
         <button @click="mobileMenuOpen = !mobileMenuOpen" class="p-2 text-ink-black" aria-label="Menu">
@@ -83,7 +97,7 @@ import ThemeToggle from '../common/ThemeToggle.vue';
 
 const route = useRoute();
 const currentPath = computed(() => route.path);
-const cartStore = useCart();
+const { totalItems } = useCart();
 
 const mobileMenuOpen = ref(false);
 
@@ -141,6 +155,27 @@ watch(currentPath, () => {
   updatePillPosition();
 });
 
+const isPopping = ref(false);
+const floatingPlusOnes = ref([]);
+let floatId = 0;
+
+watch(totalItems, (newVal, oldVal) => {
+  if (newVal > oldVal) {
+    // Jalankan animasi pop
+    isPopping.value = true;
+    setTimeout(() => {
+      isPopping.value = false;
+    }, 300);
+
+    // Munculkan +1 melayang
+    const id = floatId++;
+    floatingPlusOnes.value.push(id);
+    setTimeout(() => {
+      floatingPlusOnes.value = floatingPlusOnes.value.filter(f => f !== id);
+    }, 1000);
+  }
+});
+
 onMounted(() => {
   // Tambahkan sedikit delay agar font rendering selesai dan lebar lebih akurat
   setTimeout(() => {
@@ -153,3 +188,20 @@ onUnmounted(() => {
   window.removeEventListener('resize', updatePillPosition);
 });
 </script>
+
+<style scoped>
+.animate-float-up {
+  animation: floatUp 1s cubic-bezier(0.0, 0.0, 0.2, 1) forwards;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-32px) scale(1.2);
+  }
+}
+</style>
