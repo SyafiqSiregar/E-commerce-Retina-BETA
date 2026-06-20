@@ -14,6 +14,7 @@
   </div>
 </template>
 
+<script setup>
 import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useTheme } from './composables/useTheme';
