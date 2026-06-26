@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full pb-4 pt-2">
+  <section class="w-full">
     <div class="flex gap-2 max-w-[1200px] mx-auto overflow-x-auto px-4 hide-scrollbar">
       <button 
         v-for="cat in categories" 

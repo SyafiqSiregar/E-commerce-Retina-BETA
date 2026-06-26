@@ -23,7 +23,7 @@
     </div>
     
     <div class="flex flex-col gap-3 mt-2">
-      <button class="w-full h-[48px] shop-btn-primary flex items-center justify-center gap-2" @click="checkoutMidtrans">
+      <button class="w-full h-[48px] shop-btn-primary flex items-center justify-center gap-2" @click="$emit('checkout-midtrans')">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           <path d="M9 12l2 2 4-4"/>
@@ -62,6 +62,6 @@
 <script setup>
 import { useCart } from '../../composables/useCart';
 
-const { totalItems, totalPrice, formatPrice, checkoutMidtrans } = useCart();
-defineEmits(['checkout', 'copy']);
+const { totalItems, totalPrice, formatPrice } = useCart();
+defineEmits(['checkout', 'copy', 'checkout-midtrans']);
 </script>

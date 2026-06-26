@@ -1,5 +1,5 @@
 <template>
-  <main class="w-full max-w-[1200px] mx-auto px-4 py-8 md:py-12">
+  <main class="w-full max-w-[1200px] mx-auto px-4 py-8 md:py-12 relative">
     <div class="mb-8 border-b border-hairline pb-4">
       <router-link to="/" class="inline-flex items-center gap-2 text-slate hover:text-ink-black text-[13px] font-gt mb-4 transition-colors">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -48,20 +48,70 @@
           :item-count="items.length"
           @checkout="checkoutWhatsApp" 
           @copy="copyOrder" 
+          @checkout-midtrans="showCheckoutModal = true"
         />
+      </div>
+    </div>
+
+    <!-- Guest Checkout Modal -->
+    <div v-if="showCheckoutModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-black/20 backdrop-blur-sm transition-opacity duration-300">
+      <div class="bg-pure-white p-6 md:p-8 rounded-[11.4px] w-full max-w-md shadow-shop-lg border border-hairline transform transition-all">
+        <h3 class="text-[18px] font-gt-medium text-ink-black mb-2">Informasi Pengiriman</h3>
+        <p class="text-[12px] text-slate font-gt mb-6">Silakan isi data diri Anda untuk melanjutkan pembayaran.</p>
+        
+        <form @submit.prevent="submitCheckout" class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-gt-medium text-ink-black">Nama Lengkap</label>
+            <input v-model="customerData.name" type="text" required placeholder="Cth: Budi Santoso" class="h-10 border border-hairline rounded-sm px-3 text-[13px] focus:border-shop-violet outline-none">
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-gt-medium text-ink-black">Email</label>
+            <input v-model="customerData.email" type="email" required placeholder="Cth: budi@gmail.com" class="h-10 border border-hairline rounded-sm px-3 text-[13px] focus:border-shop-violet outline-none">
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-gt-medium text-ink-black">Nomor WhatsApp / HP</label>
+            <input v-model="customerData.phone" type="text" required placeholder="Cth: 08123456789" class="h-10 border border-hairline rounded-sm px-3 text-[13px] focus:border-shop-violet outline-none">
+          </div>
+          
+          <div class="flex gap-3 mt-4">
+            <button type="button" @click="showCheckoutModal = false" class="flex-1 h-11 shop-btn-outline" :disabled="isProcessing">Batal</button>
+            <button type="submit" class="flex-1 h-11 shop-btn-primary" :disabled="isProcessing">
+              {{ isProcessing ? 'Memproses...' : 'Lanjut Bayar' }}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </main>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useCart } from '../composables/useCart';
 import CartItem from '../components/common/CartItem.vue';
 import CartSummary from '../components/common/CartSummary.vue';
 
-const { items, updateQuantity, removeItem, checkoutWhatsApp, copyOrder } = useCart();
+const { items, updateQuantity, removeItem, checkoutWhatsApp, copyOrder, checkoutMidtrans } = useCart();
 
 const handleUpdateQty = ({ id, quantity }) => {
     updateQuantity(id, quantity);
+};
+
+// Guest Checkout State
+const showCheckoutModal = ref(false);
+const isProcessing = ref(false);
+const customerData = ref({
+  name: '',
+  email: '',
+  phone: ''
+});
+
+const submitCheckout = async () => {
+  if(!customerData.value.name || !customerData.value.email || !customerData.value.phone) return;
+  
+  isProcessing.value = true;
+  await checkoutMidtrans({...customerData.value});
+  isProcessing.value = false;
+  showCheckoutModal.value = false;
 };
 </script>

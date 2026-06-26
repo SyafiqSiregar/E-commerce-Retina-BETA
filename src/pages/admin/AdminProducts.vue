@@ -63,8 +63,8 @@
                 </div>
               </div>
             </td>
-            <td class="px-6 py-4 text-[13px] text-ink-black">
-              <span class="px-2.5 py-1 bg-[#f0f0f0] rounded-tags text-[11px]">{{ product.kategori }}</span>
+            <td class="px-6 py-4 text-[13px]">
+              <span class="px-2.5 py-1 bg-soft-canvas text-ink-black font-gt-medium border border-hairline rounded-tags text-[11px]">{{ product.kategori }}</span>
             </td>
             <td class="px-6 py-4 text-[13px] font-gt-medium text-ink-black">Rp {{ Number(product.harga_jual).toLocaleString('id-ID') }}</td>
             <td class="px-6 py-4 text-[13px]">

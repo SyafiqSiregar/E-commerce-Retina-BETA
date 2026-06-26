@@ -35,6 +35,16 @@ app.get('/api/logs', verifyToken, async (req, res) => {
     }
 });
 
+// Reports Route
+app.get('/api/reports/sales', verifyToken, async (req, res) => {
+    try {
+        const transactions = await DatabaseAdapter.getTransactions();
+        res.json(transactions);
+    } catch (e) {
+        res.status(500).json({ error: 'Gagal mengambil data penjualan' });
+    }
+});
+
 // Initialize Midtrans Snap Client
 const snap = new midtransClient.Snap({
     // Tentukan environment: false untuk sandbox/testing, true untuk production
@@ -147,6 +157,14 @@ app.post('/api/webhook/midtrans', async (req, res) => {
                 aksi: 'PAYMENT_SUCCESS',
                 detail: `Pembayaran Lunas untuk Order: ${orderId}`,
                 timestamp: new Date().toISOString()
+            });
+
+            // Catat transaksi penjualan
+            await DatabaseAdapter.addTransaction({
+                order_id: orderId,
+                tanggal: new Date().toISOString(),
+                pelanggan: 'Pelanggan Online', 
+                total: statusResponse.gross_amount || 0
             });
 
         } else if (transactionStatus == 'cancel' || transactionStatus == 'deny' || transactionStatus == 'expire') {

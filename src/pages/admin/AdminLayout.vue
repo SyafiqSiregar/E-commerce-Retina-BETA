@@ -24,6 +24,10 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
           Kategori
         </router-link>
+        <router-link to="/admin/reports" active-class="bg-soft-canvas text-ink-black font-gt-medium" class="px-4 py-2.5 rounded-md text-[14px] text-slate hover:bg-soft-canvas hover:text-ink-black transition-colors flex items-center gap-3">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Laporan
+        </router-link>
       </nav>
 
       <div class="p-4 border-t border-hairline flex flex-col gap-1">
@@ -64,6 +68,9 @@
           </router-link>
           <router-link to="/admin/categories" @click="mobileMenuOpen = false" active-class="bg-soft-canvas text-ink-black font-gt-medium" class="px-4 py-3 rounded-lg text-[15px] text-slate hover:bg-soft-canvas transition-colors">
             Kategori
+          </router-link>
+          <router-link to="/admin/reports" @click="mobileMenuOpen = false" active-class="bg-soft-canvas text-ink-black font-gt-medium" class="px-4 py-3 rounded-lg text-[15px] text-slate hover:bg-soft-canvas transition-colors">
+            Laporan
           </router-link>
         </nav>
         <div class="p-4 border-t border-hairline flex flex-col gap-3">

@@ -122,5 +122,36 @@ export const DatabaseAdapter = {
                 { id: '1', user: 'admin@retina.id', aksi: 'LOGIN', detail: 'Berhasil login ke sistem', timestamp: new Date().toISOString() }
             ];
         }
+    },
+
+    async addTransaction(transactionData) {
+        try {
+            const doc = getDoc();
+            const sheet = doc.sheetsByTitle['TRANSAKSI'];
+            if (!sheet) throw new Error("Sheet TRANSAKSI not found");
+            
+            await sheet.addRow(transactionData);
+            return true;
+        } catch (error) {
+            console.log('Mock Transaction saved:', transactionData);
+            return true;
+        }
+    },
+
+    async getTransactions() {
+        try {
+            const doc = getDoc();
+            const sheet = doc.sheetsByTitle['TRANSAKSI'];
+            if (!sheet) return [];
+            
+            const rows = await sheet.getRows();
+            return rows.map(r => r.toObject());
+        } catch (error) {
+            // Mock data transaksi
+            return [
+                { order_id: 'RETINA-1700000000000-123', tanggal: new Date().toISOString(), pelanggan: 'Budi Santoso', total: 1250000 },
+                { order_id: 'RETINA-1700000000000-124', tanggal: new Date(Date.now() - 86400000).toISOString(), pelanggan: 'Andi Kusuma', total: 350000 }
+            ];
+        }
     }
 };

@@ -69,12 +69,24 @@
             </span>
           </div>
 
-          <p class="text-[12px] text-slate font-gt leading-relaxed mb-8 transition-all duration-500 ease-out delay-150 transform" :class="isEntering ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'">
+          <p class="text-[12px] text-slate font-gt leading-relaxed mb-4 transition-all duration-500 ease-out delay-150 transform" :class="isEntering ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'">
             {{ product.deskripsi || 'Belum ada deskripsi untuk produk ini.' }}
           </p>
 
-          <!-- Primary Pill Button -->
-          <div class="mt-auto transition-all duration-500 ease-out delay-200 transform" :class="isEntering ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'">
+          <!-- Spesifikasi Teknis (Mock/Placeholder Layout) -->
+          <div class="grid grid-cols-2 gap-3 mb-6 transition-all duration-500 ease-out delay-150 transform" :class="isEntering ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'">
+            <div class="bg-soft-canvas p-3 rounded-cards flex flex-col gap-1">
+              <span class="text-[10px] text-slate font-gt uppercase tracking-wider">Garansi</span>
+              <span class="text-[12px] text-ink-black font-gt-medium">Resmi 1 Tahun</span>
+            </div>
+            <div class="bg-soft-canvas p-3 rounded-cards flex flex-col gap-1">
+              <span class="text-[10px] text-slate font-gt uppercase tracking-wider">Kondisi</span>
+              <span class="text-[12px] text-ink-black font-gt-medium">Baru (BNIB)</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="mt-auto transition-all duration-500 ease-out delay-200 transform flex flex-col gap-3" :class="isEntering ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'">
             <button 
               @click="addToCart" 
               :disabled="product.stok === 0"
@@ -91,6 +103,15 @@
                 {{ product.stok === 0 ? 'Stok Habis' : 'Tambah ke Keranjang' }}
               </span>
             </button>
+            
+            <a 
+              :href="`https://wa.me/6281297460115?text=Halo%20Retina%20CCTV,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(product.nama_barang)}.%20Berapa%20estimasi%20biaya%20jika%20termasuk%20jasa%20pemasangan?`" 
+              target="_blank"
+              class="w-full h-[48px] rounded-buttons font-gt-medium text-[14px] flex items-center justify-center gap-2 transition-all duration-300 bg-pure-white text-ink-black border border-hairline hover:border-ink-black"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              Konsultasikan Pemasangan
+            </a>
           </div>
         </div>
       </template>

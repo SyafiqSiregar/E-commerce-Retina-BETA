@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full max-w-[1200px] mx-auto px-4 py-12 md:py-16 animate-on-scroll">
+  <section class="w-full max-w-[1200px] mx-auto px-4 animate-on-scroll">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="bg-soft-canvas rounded-cards p-6 border border-hairline flex flex-col gap-3 hover:border-ink-black transition-all duration-300 ease-out">
         <span class="w-10 h-10 rounded-full bg-pure-white flex items-center justify-center text-ink-black border border-hairline">

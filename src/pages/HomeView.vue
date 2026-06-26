@@ -1,12 +1,12 @@
 <template>
-  <main>
+  <main class="flex flex-col gap-[40px] pb-[40px]">
     <HeroSection @search="handleSearch" />
     <CategoryFilter 
       :categories="categories" 
       :active-category="activeCategory"
       @select="handleCategorySelect" 
     />
-    <section class="w-full max-w-[1200px] mx-auto px-4 py-10" id="products-section">
+    <section class="w-full max-w-[1200px] mx-auto px-4" id="products-section">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-xl font-gt-medium tracking-tight text-ink-black">{{ activeCategory === 'Semua' ? 'Semua Produk' : 'Kategori: ' + activeCategory }}</h2>
         <span class="text-[13px] text-slate">{{ filteredProducts.length }} Produk</span>

@@ -86,8 +86,15 @@ export function useCart() {
         window.open(url, '_blank');
     }
 
-    async function checkoutMidtrans() {
+    async function checkoutMidtrans(customerInfo) {
         if (state.items.length === 0) return;
+
+        // Default fallback if no customer info provided
+        const finalCustomerInfo = customerInfo || {
+            name: "Pelanggan Guest",
+            email: "guest@example.com",
+            phone: "-"
+        };
 
         try {
             // 1. Dapatkan Token dari Backend Node.js kita
@@ -105,11 +112,7 @@ export function useCart() {
                             name: item.nama
                         }))
                     },
-                    customerInfo: {
-                        name: "Pelanggan Retina CCTV",
-                        email: "customer@example.com",
-                        phone: "08111222333"
-                    }
+                    customerInfo: finalCustomerInfo
                 })
             });
 

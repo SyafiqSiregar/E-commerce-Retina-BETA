@@ -1,7 +1,7 @@
 <template>
-  <main class="w-full max-w-[1200px] mx-auto px-4 py-8 md:py-12 flex flex-col gap-16 md:gap-24 relative">
+  <main class="w-full max-w-[1200px] mx-auto px-4 pb-8 md:pb-12 flex flex-col gap-[40px] relative">
     <!-- Hero Section -->
-    <section class="flex flex-col md:flex-row items-center gap-12 mt-8 md:mt-16 animate-on-scroll relative">
+    <section class="flex flex-col md:flex-row items-center gap-12 pt-16 pb-8 md:pt-24 md:pb-12 animate-on-scroll relative">
       <!-- Background Grid Ornament -->
       <div class="absolute inset-0 -z-10 bg-grid-pattern opacity-50 [mask-image:linear-gradient(to_bottom,white,transparent)]"></div>
 
@@ -20,11 +20,11 @@
         </div>
       </div>
 
-      <div class="flex-1 w-full flex justify-end">
-        <div class="w-full max-w-[480px] aspect-[4/3] bg-soft-canvas rounded-images border border-hairline relative overflow-hidden flex items-center justify-center">
-          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-concrete" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-          </svg>
+      <!-- Visual Representasi Instalasi -->
+      <div class="flex-1 w-full hidden md:flex justify-end relative">
+        <div class="w-full max-w-[480px] aspect-[4/3] bg-soft-canvas rounded-images overflow-hidden relative shadow-shop-lg border border-hairline group">
+          <img src="https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=1548&auto=format&fit=crop" alt="Layanan Instalasi CCTV Profesional" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" crossorigin="anonymous" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-black/30 to-transparent pointer-events-none"></div>
         </div>
       </div>
     </section>
